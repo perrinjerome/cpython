@@ -1659,7 +1659,7 @@ class BaseExceptionReportingTests:
             broken = False
             def __getattr__(self, name):
                 if self.broken:
-                    raise ValueError(f'no {name}')
+                    raise ValueError
                 raise AttributeError(name)
 
         e = BrokenException(123)
@@ -1667,7 +1667,7 @@ class BaseExceptionReportingTests:
         e.broken = True
         self.assertEqual(
             self.get_report(e),
-            vanilla + "Ignored error getting __notes__: ValueError('no __notes__')\n")
+            vanilla + "Ignored error getting __notes__: ValueError()\n")
 
     def test_exception_with_multiple_notes(self):
         for e in [ValueError(42), SyntaxError('bad syntax')]:
